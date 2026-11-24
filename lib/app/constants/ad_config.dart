@@ -26,25 +26,27 @@ class AdConfig {
   /// Google's test publisher id — if it's still in a production ID, live ads aren't set up yet.
   static const _testPublisher = 'ca-app-pub-3940256099942544';
 
-  static bool get productionIdsConfigured => ![
-    _prodAndroidBanner,
-    _prodAndroidInterstitial,
-    _prodAndroidRewarded,
-    _prodAndroidAppOpen,
-    _prodAndroidNative,
-    _prodIosBanner,
-    _prodIosInterstitial,
-    _prodIosRewarded,
-    _prodIosAppOpen,
-    _prodIosNative,
-  ].any((id) => id.startsWith(_testPublisher));
+  /// True when the current platform's production IDs are real (not Google's test IDs).
+  static bool get productionIdsConfigured {
+    final ios = !kIsWeb && Platform.isIOS;
+    final ids = ios
+        ? [_prodIosBanner, _prodIosInterstitial, _prodIosRewarded, _prodIosAppOpen, _prodIosNative]
+        : [
+            _prodAndroidBanner,
+            _prodAndroidInterstitial,
+            _prodAndroidRewarded,
+            _prodAndroidAppOpen,
+            _prodAndroidNative,
+          ];
+    return !ids.any((id) => id.startsWith(_testPublisher));
+  }
 
   // ---- Production unit IDs: PASTE YOUR ADMOB AD UNIT IDS HERE (ca-app-pub-XXXX/YYYY) ----
-  static const _prodAndroidBanner = 'ca-app-pub-3940256099942544/9214589741';
-  static const _prodAndroidInterstitial = 'ca-app-pub-3940256099942544/1033173712';
-  static const _prodAndroidRewarded = 'ca-app-pub-3940256099942544/5224354917';
-  static const _prodAndroidAppOpen = 'ca-app-pub-3940256099942544/9257395921';
-  static const _prodAndroidNative = 'ca-app-pub-3940256099942544/2247696110';
+  static const _prodAndroidBanner = 'ca-app-pub-7616025727863605/5510269863';
+  static const _prodAndroidInterstitial = 'ca-app-pub-7616025727863605/4197188192';
+  static const _prodAndroidRewarded = 'ca-app-pub-7616025727863605/8170017406';
+  static const _prodAndroidAppOpen = 'ca-app-pub-7616025727863605/9728395671';
+  static const _prodAndroidNative = 'ca-app-pub-7616025727863605/6910660647';
 
   static const _prodIosBanner = 'ca-app-pub-3940256099942544/2934735716';
   static const _prodIosInterstitial = 'ca-app-pub-3940256099942544/4411468910';
