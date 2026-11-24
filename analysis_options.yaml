@@ -1,0 +1,18 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+  errors:
+    # Flutter 3.47+ deprecates `package:flutter/material.dart` in favour of the
+    # separate `material_ui` package. GetX 4.x (GetMaterialApp) is still built on
+    # flutter/material, so this app stays on it until GetX migrates.
+    deprecated_member_use: ignore
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+    avoid_print: true

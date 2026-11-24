@@ -1,0 +1,54 @@
+name: crossmath_puzzle
+description: "CrossMathPuzzle – Math Puzzle Game. Crossword-style maths puzzles built with Flutter + GetX."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management, routing, DI
+  get: ^4.7.2
+  get_storage: ^2.1.1
+
+  # Monetization
+  google_mobile_ads: ^9.2.0
+  in_app_purchase: ^3.3.1
+
+  # Platform features
+  in_app_review: ^2.0.12
+  share_plus: ^13.3.1
+  url_launcher: ^6.3.3
+  package_info_plus: ^10.2.2
+  connectivity_plus: ^7.3.2
+  audioplayers: ^6.8.1
+  flutter_local_notifications: ^23.0.4
+  timezone: ^0.11.2
+  flutter_timezone: ^5.1.1
+
+  # UI
+  google_fonts: ^9.0.0
+  flutter_animate: ^4.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sounds/
+    - assets/images/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#0D1230"
+  adaptive_icon_foreground: "assets/images/app_icon_foreground.png"
+  remove_alpha_ios: true
