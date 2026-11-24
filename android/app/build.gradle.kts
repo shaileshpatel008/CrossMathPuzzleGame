@@ -55,7 +55,9 @@ android {
             signingConfig = if (keystoreFile.exists()) signingConfigs.getByName("release")
                             else signingConfigs.getByName("debug")
             isMinifyEnabled = true
-            isShrinkResources = true
+            // Resource shrinking is off: Google Play services (AdMob, billing) looks up some of
+            // its resources by name, and shrinking removed them. Code shrinking stays on.
+            isShrinkResources = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
