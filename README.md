@@ -112,14 +112,16 @@ Implemented in `lib/data/services/update_service.dart`, configured in `lib/app/c
 Ad rules (in `AdConfig` / `AdsService`): app-open from the 2nd session (max 1 per 4 h, after ≥30 s in background); banner on Gameplay & Level map; interstitial after every 2nd solved level from level 6 (≥90 s apart) and when leaving a finished daily; rewarded videos are always optional; native ad in the exit dialog. **Remove Ads / VIP hide every non-rewarded ad.**
 
 ### 2. Google Play Console products (Monetize › Products)
+Step-by-step values for every field (names, descriptions, base plans, trial offer, licence testing): **[docs/PLAY_CONSOLE_PRODUCTS.md](docs/PLAY_CONSOLE_PRODUCTS.md)**.
+
 | Product ID | Type | Suggested price | Grants |
 |---|---|---|---|
 | `remove_ads` | In-app (one-time) | $3.99 | removes non-rewarded ads |
 | `starter_pack` | In-app (one-time) | $4.99 | remove ads + 30 hints (24-h offer after level 10) |
 | `hints_10` / `hints_50` / `hints_150` | In-app (consumable) | $0.99 / $2.99 / $6.99 | hints |
-| `vip_weekly` | Subscription | $1.99 / week | VIP |
-| `vip_monthly` | Subscription | $4.99 / month | VIP |
-| `vip_yearly` | Subscription + **3-day free-trial offer** | $19.99 / year | VIP |
+| `vip_weekly` | Subscription (base plan `weekly`) | $1.99 / week | VIP |
+| `vip_monthly` | Subscription (base plan `monthly`) | $4.99 / month | VIP |
+| `vip_yearly` | Subscription (base plan `yearly` + offer `trial-3d`, 3-day free trial) | $19.99 / year | VIP |
 
 VIP = no ads, unlimited hints, Master mode, free missed dailies, free second chances, VIP themes.
 

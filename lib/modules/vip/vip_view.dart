@@ -151,7 +151,7 @@ class VipView extends GetView<VipController> {
                     child: vip
                         ? PrimaryButton(label: 'Manage subscription', onPressed: controller.manage)
                         : PrimaryButton(
-                            label: controller.plan.value == IapIds.vipYearly
+                            label: controller.iap.hasFreeTrial(controller.plan.value)
                                 ? 'Start 3-day free trial'
                                 : 'Subscribe for ${controller.iap.price(controller.plan.value)}',
                             height: 60,
@@ -198,7 +198,10 @@ class VipView extends GetView<VipController> {
     final id = controller.plan.value;
     final price = controller.iap.price(id);
     return switch (id) {
-      IapIds.vipYearly => 'Free for 3 days, then $price per year. Auto-renews.',
+      IapIds.vipYearly =>
+        controller.iap.hasFreeTrial(id)
+            ? 'Free for 3 days, then $price per year. Auto-renews.'
+            : '$price per year. Auto-renews.',
       IapIds.vipMonthly => '$price per month. Auto-renews.',
       _ => '$price per week. Auto-renews.',
     };
@@ -207,7 +210,12 @@ class VipView extends GetView<VipController> {
   Widget _plan(String id) {
     final on = controller.plan.value == id;
     final (name, sub, per, tag) = switch (id) {
-      IapIds.vipYearly => ('Yearly', '3-day free trial', 'per year', 'BEST VALUE'),
+      IapIds.vipYearly => (
+        'Yearly',
+        controller.iap.hasFreeTrial(id) ? '3-day free trial' : 'Billed every year',
+        'per year',
+        'BEST VALUE',
+      ),
       IapIds.vipMonthly => ('Monthly', 'Billed every month', 'per month', null),
       _ => ('Weekly', 'Billed every week', 'per week', null),
     };

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 import '../../app/constants/iap_config.dart';
 import '../../app/constants/storage_keys.dart';
@@ -78,14 +79,47 @@ class PurchaseService extends GetxService {
     }
   }
 
+  /// Recurring price per subscription (the trial entry's own price reads "Free").
+  final Map<String, String> _recurringPrice = {};
+
+  /// Subscription ids whose chosen offer starts with a free trial for this user.
+  final Map<String, bool> _freeTrial = {};
+
   Future<void> loadProducts() async {
     final res = await _iap.queryProductDetails(IapIds.all);
-    products.assignAll({for (final p in res.productDetails) p.id: p});
+    final chosen = <String, ProductDetails>{};
+    final rank = <String, int>{};
+    for (final p in res.productDetails) {
+      if (p is GooglePlayProductDetails && p.subscriptionIndex != null) {
+        // Google Play returns one entry per base plan / offer of a subscription, and
+        // only the offers this user is eligible for. Prefer the free-trial offer, then
+        // the plain base plan; always display the recurring (after-trial) price.
+        final offer = p.productDetails.subscriptionOfferDetails![p.subscriptionIndex!];
+        final phases = offer.pricingPhases;
+        _recurringPrice[p.id] = phases.last.formattedPrice;
+        final isTrial = offer.offerId != null && phases.length > 1 && phases.first.priceAmountMicros == 0;
+        final r = isTrial ? 2 : (offer.offerId == null ? 1 : 0);
+        if (r > (rank[p.id] ?? -1)) {
+          rank[p.id] = r;
+          chosen[p.id] = p;
+          _freeTrial[p.id] = isTrial;
+        }
+      } else {
+        chosen[p.id] = p;
+        // App Store: the introductory free trial is configured in App Store Connect.
+        if (p.id == IapIds.vipYearly) _freeTrial[p.id] = true;
+      }
+    }
+    products.assignAll(chosen);
     productsLoaded.value = true;
     if (res.notFoundIDs.isNotEmpty) debugPrint('IAP not found: ${res.notFoundIDs}');
   }
 
-  String price(String id) => products[id]?.price ?? IapIds.fallbackPrices[id] ?? '';
+  String price(String id) => _recurringPrice[id] ?? products[id]?.price ?? IapIds.fallbackPrices[id] ?? '';
+
+  /// Whether buying [id] starts a free trial for this user (true while the store is loading,
+  /// so the paywall matches the design; Play only offers the trial to eligible users).
+  bool hasFreeTrial(String id) => _freeTrial[id] ?? (id == IapIds.vipYearly && !productsLoaded.value);
 
   /// Starts a purchase. Results arrive on [events].
   Future<bool> buy(String id) async {

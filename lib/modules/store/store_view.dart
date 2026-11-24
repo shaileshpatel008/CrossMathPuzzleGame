@@ -222,7 +222,9 @@ class StoreView extends GetView<StoreController> {
                 Text(
                   vip
                       ? 'Thanks for your support — every perk is active.'
-                      : '3 days free, then ${PurchaseService.to.price(IapIds.vipYearly)} / year',
+                      : PurchaseService.to.hasFreeTrial(IapIds.vipYearly)
+                      ? '3 days free, then ${PurchaseService.to.price(IapIds.vipYearly)} / year'
+                      : 'From ${PurchaseService.to.price(IapIds.vipYearly)} / year',
                   style: AppText.body(13, color: const Color(0xFFDCD6FF)),
                 ),
                 const SizedBox(height: 14),
@@ -231,7 +233,11 @@ class StoreView extends GetView<StoreController> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
                   child: Text(
-                    vip ? 'Manage membership' : 'Start free trial',
+                    vip
+                        ? 'Manage membership'
+                        : (PurchaseService.to.hasFreeTrial(IapIds.vipYearly)
+                              ? 'Start free trial'
+                              : 'See VIP plans'),
                     style: AppText.display(15, color: const Color(0xFF2A1F7A)),
                   ),
                 ),
