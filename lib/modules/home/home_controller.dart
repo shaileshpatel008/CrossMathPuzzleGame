@@ -12,6 +12,7 @@ import '../../data/services/notification_service.dart';
 import '../../data/services/progress_service.dart';
 import '../../data/services/purchase_service.dart';
 import '../../data/services/storage_service.dart';
+import '../../data/services/update_service.dart';
 import '../../widgets/dialogs.dart';
 import 'widgets/daily_gift_dialog.dart';
 import 'widgets/exit_dialog.dart';
@@ -65,6 +66,8 @@ class HomeController extends GetxController {
       await NotificationService.to.requestPermission();
       await NotificationService.to.sync();
     }
+    // Optional update prompt (Play In-App Updates / App Store), after other popups.
+    if (Get.currentRoute == Routes.home) await UpdateService.to.checkOnLaunch();
   }
 
   void play() {

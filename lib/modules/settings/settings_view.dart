@@ -5,6 +5,7 @@ import '../../app/constants/iap_config.dart';
 import '../../app/routes/app_routes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_text.dart';
+import '../../data/services/update_service.dart';
 import '../../widgets/common.dart';
 import '../../widgets/dialogs.dart';
 import '../purchase/purchase_flow_controller.dart';
@@ -115,6 +116,13 @@ class SettingsView extends GetView<SettingsController> {
                       _link(
                         'How to play',
                         onTap: () => Get.toNamed(Routes.onboarding, arguments: 'fromGame'),
+                      ),
+                    ]),
+                    _section('App', [
+                      _link(
+                        UpdateService.to.checking.value ? 'Checking for updates…' : 'Check for updates',
+                        value: 'v${UpdateService.to.currentVersion.value}',
+                        onTap: UpdateService.to.checkNow,
                       ),
                     ]),
                     _section('Data', [

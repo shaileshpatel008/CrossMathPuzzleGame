@@ -1,0 +1,8 @@
+{
+  "android": {
+    "min_supported_version": "1.0.0"
+  },
+  "ios": {
+    "min_supported_version": "1.0.0"
+  }
+}

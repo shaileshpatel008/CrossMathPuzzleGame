@@ -42,4 +42,9 @@ class StorageKeys {
   static const vipActive = 'iap_vip_active';
   static const vipProduct = 'iap_vip_product';
   static const deliveredPurchaseIds = 'iap_delivered_ids';
+
+  // App updates
+  static const updateSnoozedUntil = 'update_snoozed_until';
+  static const updateSkippedVersion = 'update_skipped_version';
+  static const updateLastCheck = 'update_last_check';
 }

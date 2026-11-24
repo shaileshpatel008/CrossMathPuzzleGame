@@ -13,6 +13,7 @@ import 'data/services/audio_service.dart';
 import 'data/services/connectivity_service.dart';
 import 'data/services/haptics_service.dart';
 import 'data/services/notification_service.dart';
+import 'data/services/update_service.dart';
 import 'data/services/progress_service.dart';
 import 'data/services/purchase_service.dart';
 import 'data/services/settings_service.dart';
@@ -44,6 +45,7 @@ Future<void> initServices() async {
   Get.put(AdsService(), permanent: true);
   await Get.putAsync(() => AudioService().init(), permanent: true);
   await Get.putAsync(() => NotificationService().init(), permanent: true);
+  await Get.putAsync(() => UpdateService().init(), permanent: true);
 }
 
 class CrossMathApp extends StatelessWidget {

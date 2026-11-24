@@ -83,6 +83,24 @@ Levels are generated on-device from a seed (`data/engine/generator.dart`), so ev
 
 Blank count and equation count ramp up *within* each tier. Tune everything in `data/models/difficulty.dart`; `test/engine_test.dart` verifies validity and uniqueness for every tier.
 
+## App updates (Android + iOS)
+
+Implemented in `lib/data/services/update_service.dart`, configured in `lib/app/constants/update_config.dart`.
+
+**Default: optional.** On launch (after the daily gift, at most every 12 h) and from *Settings › Check for updates*:
+
+| | Optional (default) | Forced |
+|---|---|---|
+| **Android** | Google Play **flexible** in-app update: Play's consent sheet → downloads in the background while the player keeps playing → "Update ready · Restart now" | Play **immediate** update (full-screen); if declined, a blocking dialog that opens the Play Store |
+| **iOS** | App Store lookup → our "Update available" dialog (What's new, *Update now* / *Later* / *Skip this version*) → opens the App Store | Same dialog without *Later*/*Skip*; can't be dismissed |
+
+- *Later* snoozes automatic prompts for 3 days; *Skip this version* hides that version only. Manual checks ignore both.
+- **Forcing an update** (for critical fixes only), without shipping new code to old installs:
+  1. Host `app_update.json` (repo root) somewhere public and set `UpdateConfig.remoteConfigUrl`. Any installed version below `min_supported_version` gets a blocking update.
+  2. Android only: release with in-app update **priority ≥ 4** (Google Play Developer API `inAppUpdatePriority`).
+- Android in-app updates only work for installs from Google Play. Test with an Internal testing track or *Internal app sharing*: install the older build, then publish a higher `versionCode`.
+- iOS uses the public lookup `https://itunes.apple.com/lookup?bundleId=sp.math.puzzle.games.crossmathpuzzle.play` — it starts working once the app is live on the App Store. Set `UpdateConfig.appStoreId` after the first release.
+
 ## Monetization setup (before release)
 
 ### 1. AdMob

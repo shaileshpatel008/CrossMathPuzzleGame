@@ -32,6 +32,8 @@ dependencies:
   # UI
   google_fonts: ^9.0.0
   flutter_animate: ^4.5.2
+  in_app_update: ^5.0.0
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
