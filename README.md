@@ -129,13 +129,7 @@ Purchases are acknowledged via `completePurchase` (required within 3 days), cons
 
 ### 3. Other TODOs
 - `lib/app/constants/app_constants.dart`: privacy policy URL, terms URL, support e-mail.
-- Release signing: create `android/key.properties`:
-  ```properties
-  storePassword=...
-  keyPassword=...
-  keyAlias=upload
-  storeFile=/path/to/upload-keystore.jks
-  ```
+- Release signing: copy `android/key.properties-sample` to `android/key.properties` and fill in your keystore path, alias and passwords (the sample includes the `keytool` command). Without it, release builds fall back to the debug key.
 - Play Console data safety: declare Ads, Advertising ID, Purchase history, App interactions.
 
 ## Notes

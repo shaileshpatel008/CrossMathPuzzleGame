@@ -1,0 +1,15 @@
+# Release signing for Google Play.
+#
+# 1. Copy this file to android/key.properties (same folder) and fill in your values.
+#    key.properties and *.jks are git-ignored — never commit them.
+# 2. Create the upload key once (one line; quote paths that contain spaces):
+#    keytool -genkeypair -v -keystore "/path/to/your-keystore.jks" -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias your-alias
+# 3. Build: flutter build appbundle --release
+#
+# storeFile: an absolute path, or a path relative to android/app/.
+# Spaces in the path are fine here (no quotes).
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=crossmathpuzzlegame
+storeFile=/Users/Shailesh/Documents/CrossMathPuzzle Game/Keystores/crossmathpuzzlegame-keystore.jks
