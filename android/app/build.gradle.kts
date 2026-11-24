@@ -8,7 +8,8 @@ plugins {
 
 android {
     namespace = "sp.math.puzzle.games.crossmathpuzzle.play"
-    compileSdk = flutter.compileSdkVersion
+    // flutter_local_notifications + AndroidX core 1.19 require compiling against API 37.
+    compileSdk = maxOf(flutter.compileSdkVersion, 37)
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
