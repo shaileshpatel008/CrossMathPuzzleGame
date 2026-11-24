@@ -21,13 +21,15 @@ class BoardView extends StatelessWidget {
       builder: (context, box) {
         final p = controller.p;
         const pad = 10.0;
+        // The 1px border is added on top of the padding, so count it in the frame.
+        const edge = pad + 1;
         final gapRatio = 0.11;
-        final byW = (box.maxWidth - pad * 2) / (p.width + (p.width - 1) * gapRatio);
-        final byH = (box.maxHeight - pad * 2) / (p.height + (p.height - 1) * gapRatio);
+        final byW = (box.maxWidth - edge * 2) / (p.width + (p.width - 1) * gapRatio);
+        final byH = (box.maxHeight - edge * 2) / (p.height + (p.height - 1) * gapRatio);
         final size = math.min(56.0, math.min(byW, byH));
         final gap = size * gapRatio;
-        final boardW = p.width * size + (p.width - 1) * gap + pad * 2;
-        final boardH = p.height * size + (p.height - 1) * gap + pad * 2;
+        final boardW = p.width * size + (p.width - 1) * gap + edge * 2;
+        final boardH = p.height * size + (p.height - 1) * gap + edge * 2;
         final needsZoom = size < 32;
 
         final board = Obx(() {
@@ -49,6 +51,7 @@ class BoardView extends StatelessWidget {
               border: Border.all(color: theme.isLight ? const Color(0x22000000) : AppColors.lineSoft),
             ),
             child: Stack(
+              clipBehavior: Clip.none, // keep the selected cell's glow visible
               children: [
                 for (var i = 0; i < p.cells.length; i++)
                   if (!p.cells[i].isEmpty)
