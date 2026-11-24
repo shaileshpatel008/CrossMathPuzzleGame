@@ -2,18 +2,44 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 
-/// AdMob configuration.
+/// AdMob configuration — see docs/ADMOB_SETUP.md.
 ///
-/// Debug builds always use Google's official test units. Before releasing,
-/// paste your own unit IDs into the `_prod*` constants below and set the
-/// AdMob App ID in `android/app/src/main/AndroidManifest.xml` and
-/// `ios/Runner/Info.plist`.
+/// Debug/profile builds always use Google's official test units; release builds
+/// use the production IDs below. To go live:
+///  1. Paste your 10 ad unit IDs into the `_prod*` constants below.
+///  2. Put your AdMob **App IDs** (the ones with `~`) in
+///     `android/app/src/main/AndroidManifest.xml` and `ios/Runner/Info.plist`.
+///  3. Add your own phones to [testDeviceIds] so they never get live ads.
 class AdConfig {
   AdConfig._();
 
   static bool get useTestAds => !kReleaseMode;
 
-  // ---- Production unit IDs (TODO: replace) ----
+  /// Devices that must always receive test ads, even in release builds.
+  /// Run the app once with live IDs and copy the id from the log line:
+  /// "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABC123..."))".
+  /// Clicking real ads on your own phone can get the AdMob account suspended.
+  static const List<String> testDeviceIds = <String>[
+    // 'ABC123DEF456...',
+  ];
+
+  /// Google's test publisher id — if it's still in a production ID, live ads aren't set up yet.
+  static const _testPublisher = 'ca-app-pub-3940256099942544';
+
+  static bool get productionIdsConfigured => ![
+    _prodAndroidBanner,
+    _prodAndroidInterstitial,
+    _prodAndroidRewarded,
+    _prodAndroidAppOpen,
+    _prodAndroidNative,
+    _prodIosBanner,
+    _prodIosInterstitial,
+    _prodIosRewarded,
+    _prodIosAppOpen,
+    _prodIosNative,
+  ].any((id) => id.startsWith(_testPublisher));
+
+  // ---- Production unit IDs: PASTE YOUR ADMOB AD UNIT IDS HERE (ca-app-pub-XXXX/YYYY) ----
   static const _prodAndroidBanner = 'ca-app-pub-3940256099942544/9214589741';
   static const _prodAndroidInterstitial = 'ca-app-pub-3940256099942544/1033173712';
   static const _prodAndroidRewarded = 'ca-app-pub-3940256099942544/5224354917';

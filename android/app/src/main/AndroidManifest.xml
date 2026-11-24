@@ -34,7 +34,8 @@
             </intent-filter>
         </activity>
 
-        <!-- AdMob App ID. This is Google's TEST app id — replace with your own before release. -->
+        <!-- AdMob App ID (Android app in AdMob › App settings, contains "~").
+             The value below is Google's TEST app id — replace it with yours before release. -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />

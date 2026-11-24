@@ -75,7 +75,13 @@ class AdsService extends GetxService {
     if (sdkReady.value) return;
     try {
       if (!await ConsentInformation.instance.canRequestAds()) return;
+      await MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(testDeviceIds: AdConfig.testDeviceIds),
+      );
       await MobileAds.instance.initialize();
+      if (kReleaseMode && !AdConfig.productionIdsConfigured) {
+        debugPrint('WARNING: release build is using Google TEST ad unit IDs — set them in ad_config.dart');
+      }
       sdkReady.value = true;
       _preloadAll();
       await AppStateEventNotifier.startListening();

@@ -104,6 +104,8 @@ Implemented in `lib/data/services/update_service.dart`, configured in `lib/app/c
 ## Monetization setup (before release)
 
 ### 1. AdMob
+Full step-by-step guide (ad units, privacy messages, app-ads.txt, test devices): **[docs/ADMOB_SETUP.md](docs/ADMOB_SETUP.md)**.
+
 1. Create an AdMob app for Android (and iOS) and five ad units: **Banner, Interstitial, Rewarded, App open, Native**.
 2. Paste the unit IDs into the `_prod*` constants in `lib/app/constants/ad_config.dart`.
 3. Replace the **test App ID** in `android/app/src/main/AndroidManifest.xml` (`com.google.android.gms.ads.APPLICATION_ID`) and `ios/Runner/Info.plist` (`GADApplicationIdentifier`).
