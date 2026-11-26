@@ -1,7 +1,7 @@
 name: crossmath_puzzle
 description: "CrossMathPuzzle – Math Puzzle Game. Crossword-style maths puzzles built with Flutter + GetX."
 publish_to: 'none'
-version: 1.0.1+2
+version: 1.0.2+3
 
 environment:
   sdk: ^3.8.0
