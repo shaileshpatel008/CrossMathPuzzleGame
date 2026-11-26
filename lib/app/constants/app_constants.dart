@@ -10,9 +10,10 @@ class AppConstants {
   static const String manageSubscriptionsUrl =
       'https://play.google.com/store/account/subscriptions?package=$packageName';
 
-  // TODO: replace with your real pages before publishing.
-  static const String privacyPolicyUrl = 'https://example.com/crossmath/privacy';
-  static const String termsUrl = 'https://example.com/crossmath/terms';
+  // Hosted with GitHub Pages from /docs (Settings › Pages › main branch, /docs folder).
+  static const String privacyPolicyUrl =
+      'https://shaileshpatel008.github.io/CrossMathPuzzleGame/privacy-policy.html';
+  static const String termsUrl = 'https://shaileshpatel008.github.io/CrossMathPuzzleGame/terms.html';
   static const String supportEmail = 'support@example.com';
 
   // Game economy
